@@ -1,15 +1,9 @@
+server:
+  port: 8080
 spring:
-#  datasource:
-#    driverClassName: org.h2.Driver
-#    url: jdbc:h2:mem:test;MODE=PostgreSQL
-  datasource:
-    driver-class-name:  org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/webshop
-    username: postgres
-    password: Post$Gres
-    schema: webshop
+  profiles:
+    active: ${STAGE:local}
   jpa:
-    database-platform:  org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: validate
   data:
