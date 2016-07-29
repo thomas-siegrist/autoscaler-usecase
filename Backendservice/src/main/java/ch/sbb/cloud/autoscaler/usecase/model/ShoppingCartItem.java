@@ -6,13 +6,14 @@ package ch.sbb.cloud.autoscaler.usecase.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
 import ch.sbb.cloud.autoscaler.usecase.model.base.BaseIdEntity;
 
 @Entity
 public class ShoppingCartItem extends BaseIdEntity {
 
-    @Column
+    @ManyToOne
     private Article article;
 
     @Column

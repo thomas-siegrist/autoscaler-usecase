@@ -4,9 +4,10 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -20,7 +21,7 @@ import ch.sbb.cloud.autoscaler.usecase.model.base.BaseIdEntity;
 @Entity
 public class ShoppingCart extends BaseIdEntity {
 
-    @Column
+    @ManyToOne(cascade = CascadeType.ALL)
     private Customer customer;
 
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
@@ -28,16 +29,8 @@ public class ShoppingCart extends BaseIdEntity {
     private Date timestamp = new Date();
 
     @Column(name = "item_id")
-    @OneToMany(orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(orphanRemoval = true)
     private Set<ShoppingCartItem> items = new HashSet<>();
-
-    public Date getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
-    }
 
     public Set<ShoppingCartItem> getItems() {
         return items;

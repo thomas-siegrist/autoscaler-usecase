@@ -25,7 +25,7 @@ public class Customer extends BaseIdEntity {
     @Column
     private String email;
 
-    @Column
+    @Column(name = "customer_id")
     @OneToMany(orphanRemoval = true, mappedBy = "customer", fetch = FetchType.EAGER)
     private Set<ShoppingCart> shoppingCarts;
 

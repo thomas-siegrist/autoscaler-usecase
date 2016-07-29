@@ -31,7 +31,7 @@ CREATE TABLE customer
 CREATE TABLE shopping_cart
 (
   id bigint NOT NULL,
-  customer bytea,
+  customer_id bigint,
   timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT shopping_cart_pkey PRIMARY KEY (id)
 );
@@ -40,7 +40,7 @@ CREATE TABLE shopping_cart_item
 (
   id bigint NOT NULL,
   amount bigint,
-  article bytea,
+  article_id bigint,
   CONSTRAINT shopping_cart_item_pkey PRIMARY KEY (id)
 );
 
