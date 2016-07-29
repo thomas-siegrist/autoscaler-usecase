@@ -6,6 +6,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -27,7 +28,7 @@ public class ShoppingCart extends BaseIdEntity {
     private Date timestamp = new Date();
 
     @Column(name = "item_id")
-    @OneToMany(orphanRemoval = true)
+    @OneToMany(orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<ShoppingCartItem> items = new HashSet<>();
 
     public Date getTimestamp() {

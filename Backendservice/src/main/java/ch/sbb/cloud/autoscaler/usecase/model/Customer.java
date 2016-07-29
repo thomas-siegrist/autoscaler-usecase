@@ -4,8 +4,12 @@
 
 package ch.sbb.cloud.autoscaler.usecase.model;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 
 import ch.sbb.cloud.autoscaler.usecase.model.base.BaseIdEntity;
 
@@ -20,6 +24,10 @@ public class Customer extends BaseIdEntity {
 
     @Column
     private String email;
+
+    @Column
+    @OneToMany(orphanRemoval = true, mappedBy = "customer", fetch = FetchType.EAGER)
+    private Set<ShoppingCart> shoppingCarts;
 
     public String getFirstName() {
         return firstName;
@@ -43,6 +51,14 @@ public class Customer extends BaseIdEntity {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Set<ShoppingCart> getShoppingCarts() {
+        return shoppingCarts;
+    }
+
+    public void setShoppingCarts(Set<ShoppingCart> shoppingCarts) {
+        this.shoppingCarts = shoppingCarts;
     }
 
 }

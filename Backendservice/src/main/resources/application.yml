@@ -12,5 +12,8 @@ spring:
     database-platform:  org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: validate
+  data:
+    rest:
+      base-path: /
 flyway:
   baseline-on-migrate:  true
