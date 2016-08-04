@@ -1,5 +1,6 @@
 package ch.sbb.cloud.autoscaler.usecase.api;
 
+import ch.sbb.cloud.autoscaler.usecase.model.PrintResponse;
 import ch.sbb.cloud.autoscaler.usecase.model.PrintTask;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,19 +19,28 @@ public class PrintResource {
             consumes = "application/json",
             method = RequestMethod.POST
     )
-    public ResponseEntity<String> createPrintTask(@RequestBody PrintTask printTask) {
+    public ResponseEntity<PrintResponse> createPrintTask(@RequestBody PrintTask printTask) {
+        String response = "";
         try {
             for (int i = 0; i < printTask.getNumberOfOrders() - 1; i++)
                 Thread.sleep(20);
         } catch (InterruptedException e) {
-            return handleError(e);
+            response = handleError(e);
         }
-        return ResponseEntity.ok("Successfully posted the PrintTask");
+        response = "Successfully posted the PrintTask";
+        return ResponseEntity.ok(printResponse(response, printTask.getNumberOfOrders()));
     }
 
-    private ResponseEntity<String> handleError(InterruptedException e) {
+    private PrintResponse printResponse(String response, Integer numberOfOrders) {
+        PrintResponse printResponse = new PrintResponse();
+        printResponse.setResponse(response);
+        printResponse.setNumberOfPages(numberOfOrders / 10); // 10 Orders per page
+        return printResponse;
+    }
+
+    private String handleError(InterruptedException e) {
         e.printStackTrace();
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        return e.getMessage();
     }
 
 }
