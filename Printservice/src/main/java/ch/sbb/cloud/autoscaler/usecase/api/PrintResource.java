@@ -34,8 +34,12 @@ public class PrintResource {
     private PrintResponse printResponse(String response, Integer numberOfOrders) {
         PrintResponse printResponse = new PrintResponse();
         printResponse.setResponse(response);
-        printResponse.setNumberOfPages(numberOfOrders / 10); // 10 Orders per page
+        printResponse.setNumberOfPages(numberOfPages(numberOfOrders)); // 10 Orders per page
         return printResponse;
+    }
+
+    private int numberOfPages(Integer numberOfOrders) {
+        return Double.valueOf(Math.ceil(numberOfOrders / 10)).intValue();
     }
 
     private String handleError(InterruptedException e) {
