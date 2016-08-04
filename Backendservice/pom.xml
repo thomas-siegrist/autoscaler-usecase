@@ -12,10 +12,10 @@
 	<description>Autoscaler-Usecase Microservice</description>
 
 	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.4.1.BUILD-SNAPSHOT</version>
-		<relativePath/>
+		<groupId>ch.sbb.cloud.autoscaler.usecase</groupId>
+		<artifactId>usecaseparent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
 		<!-- lookup parent from repository -->
 	</parent>
 
@@ -78,25 +78,6 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-
-			<plugin>
-				<groupId>com.spotify</groupId>
-				<artifactId>docker-maven-plugin</artifactId>
-				<version>0.4.10</version>
-				<configuration>
-					<imageName>registry.openshift.local/usecase/${project.artifactId}</imageName>
-					<dockerDirectory>src/main/docker</dockerDirectory>
-					<resources>
-						<resource>
-							<targetPath>/</targetPath>
-							<directory>${project.build.directory}</directory>
-							<include>${project.build.finalName}.jar</include>
-						</resource>
-					</resources>
-					<serverId>docker-openshift</serverId>
-				</configuration>
-			</plugin>
-
 		</plugins>
 	</build>
 
