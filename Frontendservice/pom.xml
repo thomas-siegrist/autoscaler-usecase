@@ -4,18 +4,19 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>ch.sbb.cloud.autoscaler.usecase</groupId>
-	<artifactId>Frontendservice</artifactId>
+	<artifactId>frontendservice</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>Frontendservice</name>
+	<name>frontendservice</name>
 	<description>Autoscaler-Usecase Microservice</description>
 
 	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.4.1.BUILD-SNAPSHOT</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<groupId>ch.sbb.cloud.autoscaler.usecase</groupId>
+		<artifactId>usecaseparent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+		<!-- lookup parent from repository -->
 	</parent>
 
 	<properties>
