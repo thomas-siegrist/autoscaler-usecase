@@ -5,3 +5,7 @@ spring:
     name: Printservice
   profiles:
     active: ${STAGE:local}
+  rabbitmq:
+        host: ${rabbitmq:localhost}
+        username: guest
+        password: guest

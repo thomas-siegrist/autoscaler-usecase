@@ -1,4 +1,4 @@
-package ch.sbb.cloud.autoscaler.usecase.api;
+package ch.sbb.cloud.autoscaler.usecase.jms;
 
 import ch.sbb.cloud.autoscaler.usecase.model.Email;
 import org.springframework.http.HttpStatus;
@@ -25,6 +25,7 @@ public class EmailResource {
         } catch (InterruptedException e) {
             return handleError(e);
         }
+        System.out.println("Successfully posted Email");
         return ResponseEntity.ok("Successfully posted the Email");
     }
 

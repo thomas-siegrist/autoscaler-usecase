@@ -5,3 +5,5 @@ spring:
     name: Frontendservice
   profiles:
     active: ${STAGE:local}
+backendservice:
+  url: http://localhost:8080

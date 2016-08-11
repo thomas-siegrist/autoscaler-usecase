@@ -11,5 +11,11 @@ spring:
   data:
     rest:
       base-path: /
+  rabbitmq:
+        host: ${rabbitmq:localhost}
+        username: guest
+        password: guest
 flyway:
   baseline-on-migrate:  true
+paymentservice:
+  url: http://localhost:8081
