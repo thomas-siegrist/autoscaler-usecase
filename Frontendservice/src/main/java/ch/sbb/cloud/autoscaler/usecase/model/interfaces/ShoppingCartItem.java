@@ -4,9 +4,9 @@
 
 package ch.sbb.cloud.autoscaler.usecase.model.interfaces;
 
-import ch.sbb.cloud.autoscaler.usecase.model.interfaces.base.BaseIdModelClass;
+import org.springframework.hateoas.ResourceSupport;
 
-public class ShoppingCartItem extends BaseIdModelClass {
+public class ShoppingCartItem {
 
     private Article article;
 

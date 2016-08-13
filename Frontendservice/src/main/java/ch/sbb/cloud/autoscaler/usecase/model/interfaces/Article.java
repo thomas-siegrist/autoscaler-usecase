@@ -2,11 +2,12 @@ package ch.sbb.cloud.autoscaler.usecase.model.interfaces;
 
 
 import ch.sbb.cloud.autoscaler.usecase.model.interfaces.base.BaseIdModelClass;
+import org.springframework.hateoas.ResourceSupport;
 
 /**
  * Created by thomas on 29.07.16.
  */
-public class Article extends BaseIdModelClass {
+public class Article {
 
     private String name;
 

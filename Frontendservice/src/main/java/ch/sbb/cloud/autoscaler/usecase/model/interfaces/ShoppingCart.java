@@ -1,6 +1,7 @@
 package ch.sbb.cloud.autoscaler.usecase.model.interfaces;
 
 import ch.sbb.cloud.autoscaler.usecase.model.interfaces.base.BaseIdModelClass;
+import org.springframework.hateoas.ResourceSupport;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -10,7 +11,7 @@ import java.util.Set;
 /**
  * Created by thomas on 29.07.16.
  */
-public class ShoppingCart extends BaseIdModelClass {
+public class ShoppingCart {
 
     private Customer customer;
 

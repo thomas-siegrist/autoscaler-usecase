@@ -1,4 +1,4 @@
--- Kategorien:
+-- Kategorien
 INSERT INTO category(id, name) VALUES (0, 'Schwein');
 INSERT INTO category(id, name) VALUES (1, 'Rind');
 INSERT INTO category(id, name) VALUES (2, 'Kalb');
@@ -23,7 +23,7 @@ INSERT INTO article(id,category_id, name, description, price, stock) VALUES (7,0
 INSERT INTO article(id,category_id, name, description, price, stock) VALUES (8,0, 'Bauch', 'Kräftig durchwachsen und von Rippenknochen durchzogen ist der Schweinebauch, eine beliebte und häufig nachgefragte Partie, die auch als Wammerl bezeichnet wird. ', 3.3, 1000);
 INSERT INTO article(id,category_id, name, description, price, stock) VALUES (9,0, 'Rippe', 'Diese grobfaserige Fleischspezialität zwischen Bauch und Schulter ist an der Brustspitze angesiedelt und meist deutlich mit Fett durchzogen.', 4.5, 1000);
 
--- Rindfleisch-Sorten,,category stock,
+-- Rindfleisch-Sorten
 INSERT INTO article(id,category_id, name, description, price, stock) VALUES (10,1, 'Kamm', 'Die obere Halspartie heißt auch Nacken und hat kräftiges, durchwachsenes Fleisch. Es ist sehr saftig und kann gut gereift ein Steak ersetzen.', 3.3, 1000);
 INSERT INTO article(id,category_id, name, description, price, stock) VALUES (11,1, 'Rippe', 'Auch wenn hier recht viel Fett dabei ist – die Hohe Rippe zählt zu den beliebten Teilen vom Rind. Ihr Fleisch ist von feinen Fettäderchen durchzogen, die es saftig und sehr schmackhaft machen. „Obendrauf“ ist die dickere Fettschicht.', 3.7, 1000);
 INSERT INTO article(id,category_id, name, description, price, stock) VALUES (12,1, 'Roasbeef', 'Das auch Zwischenrippenstück genannte Roastbeef hat einen mageren Fleischkern und von feinen Fettäderchen durchzogenes Muskelfleisch. Es ist nach dem Filet das Wertvollste vom Rind. ', 5.3, 1000);
@@ -41,3 +41,17 @@ INSERT INTO customer(id, first_name, last_name, email) VALUES (1, 'Bart', 'Simps
 INSERT INTO customer(id, first_name, last_name, email) VALUES (2, 'Marge', 'Simpson', 'marge.simpson@gmail.com');
 INSERT INTO customer(id, first_name, last_name, email) VALUES (3, 'Lisa', 'Simpson', 'lisa.simpson@gmail.com');
 INSERT INTO customer(id, first_name, last_name, email) VALUES (4, 'Mr', 'Burns', 'mr.burns@gmail.com');
+
+-- Einkaufswagen
+INSERT INTO shopping_cart(id, customer_id, timestamp) VALUES (0, 0, CURRENT_TIMESTAMP);
+INSERT INTO shopping_cart(id, customer_id, timestamp) VALUES (1, 1, CURRENT_TIMESTAMP);
+INSERT INTO shopping_cart(id, customer_id, timestamp) VALUES (2, 2, CURRENT_TIMESTAMP);
+INSERT INTO shopping_cart(id, customer_id, timestamp) VALUES (3, 3, CURRENT_TIMESTAMP);
+INSERT INTO shopping_cart_item(id, amount, article_id) VALUES (0, 1, 13);
+INSERT INTO shopping_cart_item(id, amount, article_id) VALUES (1, 25, 13);
+INSERT INTO shopping_cart_item(id, amount, article_id) VALUES (2, 100, 13);
+INSERT INTO shopping_cart_item(id, amount, article_id) VALUES (3, 1000, 13);
+INSERT INTO shopping_cart_items(shopping_cart_id, items_id) VALUES (0, 0);
+INSERT INTO shopping_cart_items(shopping_cart_id, items_id) VALUES (1, 1);
+INSERT INTO shopping_cart_items(shopping_cart_id, items_id) VALUES (2, 2);
+INSERT INTO shopping_cart_items(shopping_cart_id, items_id) VALUES (3, 3);

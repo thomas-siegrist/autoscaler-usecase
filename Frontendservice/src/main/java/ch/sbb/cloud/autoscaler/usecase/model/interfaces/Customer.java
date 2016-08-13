@@ -5,10 +5,11 @@
 package ch.sbb.cloud.autoscaler.usecase.model.interfaces;
 
 import ch.sbb.cloud.autoscaler.usecase.model.interfaces.base.BaseIdModelClass;
+import org.springframework.hateoas.ResourceSupport;
 
 import java.util.Set;
 
-public class Customer extends BaseIdModelClass {
+public class Customer {
 
     private String firstName;
 

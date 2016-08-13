@@ -1,6 +1,7 @@
 package ch.sbb.cloud.autoscaler.usecase.api;
 
 import ch.sbb.cloud.autoscaler.usecase.model.ShoppingCart;
+import ch.sbb.cloud.autoscaler.usecase.model.ShoppingCartItem;
 import ch.sbb.cloud.autoscaler.usecase.model.interfaces.Payment;
 import ch.sbb.cloud.autoscaler.usecase.model.interfaces.PrintTask;
 import ch.sbb.cloud.autoscaler.usecase.repository.ShoppingCartRepository;
@@ -9,6 +10,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,16 +43,19 @@ public class CheckoutResource {
             consumes = "application/json",
             method = RequestMethod.POST
     )
-    public ResponseEntity<String> checkout(@PathVariable(value = "id") Long shoppingCartId) {
+    public void checkout(@PathVariable(value = "id") Long shoppingCartId) {
         ShoppingCart shoppingCart = shoppingCartRepository.findOne(shoppingCartId);
         makePayment(shoppingCart);
         createPrintTask(shoppingCart);
-        return ResponseEntity.ok("Successfully checked out shoppingcart.");
     }
 
     public void makePayment(ShoppingCart shoppingCart) {
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
         Payment payment = createPayment(shoppingCart);
-        restTemplate.postForObject(paymentserviceUrl + "/payment", payment, String.class);
+        restTemplate.postForObject(paymentserviceUrl + "/payment", new HttpEntity(payment, headers), String.class);
     }
 
     private Payment createPayment(ShoppingCart shoppingCart) {
@@ -60,8 +67,16 @@ public class CheckoutResource {
 
     private void createPrintTask(ShoppingCart shoppingCart) {
         PrintTask printTask = new PrintTask();
-        printTask.setNumberOfOrders(shoppingCart.getItems().size());
+        printTask.setNumberOfOrders(numberOfItemsIn(shoppingCart));
         this.template.convertAndSend("print-queue", toJson(printTask));
+    }
+
+    private Integer numberOfItemsIn(ShoppingCart shoppingCart) {
+        int counter = 0;
+        for (ShoppingCartItem shoppingCartItem : shoppingCart.getItems()) {
+            counter += shoppingCartItem.getAmount();
+        }
+        return counter;
     }
 
     private String toJson(PrintTask printTask) {

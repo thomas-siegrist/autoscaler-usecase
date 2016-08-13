@@ -1,15 +1,19 @@
 package ch.sbb.cloud.autoscaler.usecase.api;
 
-import ch.sbb.cloud.autoscaler.usecase.model.interfaces.*;
+import ch.sbb.cloud.autoscaler.usecase.model.interfaces.Article;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.hateoas.PagedResources;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by thomas on 04.08.16.
@@ -28,8 +32,14 @@ public class WebShopUseCasesResource {
             produces = "application/json",
             method = RequestMethod.GET
     )
-    public Collection<Category> getCategories() {
-        ResponseEntity<PagedResources> response = restTemplate.getForEntity(backendserviceUrl + "/categories", PagedResources.class);
+    public Collection getCategories() {
+        ResponseEntity<PagedResources<Article>> response = restTemplate
+                .exchange(backendserviceUrl + "/categories",
+                        HttpMethod.GET, null,
+                        new ParameterizedTypeReference<PagedResources<Article>>() {
+                        },
+                        Collections.emptyMap()
+                );
         return safeGetContent(response);
     }
 
@@ -38,55 +48,34 @@ public class WebShopUseCasesResource {
             produces = "application/json",
             method = RequestMethod.GET
     )
-    public Collection<Article> fulltextSearch(@RequestParam(value = "name") String name) {
+    public Collection<Article> fulltextSearch(@RequestParam(value = "name", required = false) String name) {
         simulateSomeCpuUsage();
-        ResponseEntity<PagedResources> response = restTemplate.getForEntity(backendserviceUrl + "/articles", PagedResources.class, urlVariables(name));
+        ResponseEntity<PagedResources<Article>> response = restTemplate
+                .exchange(backendserviceUrl + "/articles",
+                        HttpMethod.GET, null,
+                        new ParameterizedTypeReference<PagedResources<Article>>() {
+                        },
+                        StringUtils.isBlank(name) ? Collections.emptyMap() : urlVariables(name)
+                );
         return safeGetContent(response);
     }
 
     @RequestMapping(
-            path = "/checkout",
+            path = "/checkout/{shoppingCartId}",
+            produces = "text/plain",
             method = RequestMethod.POST
     )
-    public void placeOrderWithANumberOfItems(@RequestParam(value = "numberOfItems") Long numberOfItems) {
-        ShoppingCart shoppingCart = new ShoppingCart();
-        shoppingCart.setCustomer(customer());
-        shoppingCart.getItems().addAll(someSoppingCartItems(numberOfItems));
-        Long shoppingCartId = restTemplate.postForObject(backendserviceUrl + "/shoppingCart", shoppingCart, Long.class);
-        restTemplate.postForObject(backendserviceUrl + "/checkout", shoppingCartId, String.class);
-    }
+    public ResponseEntity<String> placeOrderWithANumberOfItems(@PathVariable(value = "shoppingCartId") Long shoppingCartId) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> entity = new HttpEntity(null, headers);
 
-    private Collection<? extends ShoppingCartItem> someSoppingCartItems(Long numberOfItems) {
-        List<Article> allArticles = getAllArticles().stream().collect(Collectors.toList());
-        List<ShoppingCartItem> items = new ArrayList<>();
-        if (allArticles.size() >= numberOfItems) {
-            items.addAll(allArticles.stream()
-                    .map(article -> toShoppingCartItem(article, 1L))
-                    .collect(Collectors.toList()));
-        } else {
-            items.add(toShoppingCartItem(allArticles.get(0), numberOfItems));
+        try {
+            restTemplate.exchange(backendserviceUrl + "/checkout/" + shoppingCartId, HttpMethod.POST, entity, ResponseEntity.class);
+            return ResponseEntity.ok("Successfully checked out Shopping-Cart with id : " + shoppingCartId);
+        } catch (Throwable t) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Checkout unsuccessful! Error-Message: " + t.getMessage());
         }
-        return items;
-    }
-
-    private Collection<Article> getAllArticles() {
-        ResponseEntity<PagedResources> response = restTemplate.getForEntity(backendserviceUrl + "/articles", PagedResources.class);
-        return safeGetContent(response);
-    }
-
-    private ShoppingCartItem toShoppingCartItem(Article article, Long amount) {
-        ShoppingCartItem item = new ShoppingCartItem();
-        item.setAmount(amount);
-        item.setArticle(article);
-        return item;
-    }
-
-    private Customer customer() {
-        Customer customer = new Customer();
-        customer.setEmail("test@gmail.com");
-        customer.setFirstName("FirstName");
-        customer.setLastName("LastName");
-        return customer;
     }
 
     private Map<String, String> urlVariables(String name) {
@@ -95,7 +84,7 @@ public class WebShopUseCasesResource {
         return urlVariables;
     }
 
-    private Collection safeGetContent(ResponseEntity<PagedResources> response) {
+    private Collection safeGetContent(ResponseEntity<PagedResources<Article>> response) {
         if (response == null || response.getBody() == null || response.getBody().getContent() == null)
             return Collections.EMPTY_LIST;
         return response.getBody().getContent();
@@ -120,7 +109,7 @@ public class WebShopUseCasesResource {
     }
 
     private static void loppALittleBit() {
-        for (Long i = 0l; i<100_000; i++) {
+        for (Long i = 0l; i < 100_000; i++) {
             // waste CPU
         }
     }

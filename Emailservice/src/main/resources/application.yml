@@ -5,3 +5,7 @@ spring:
     name: Emailservice
   profiles:
     active: ${STAGE:local}
+  rabbitmq:
+          host: ${rabbitmq:localhost}
+          username: guest
+          password: guest
