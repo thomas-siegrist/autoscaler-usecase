@@ -7,5 +7,3 @@ spring:
     schema: webshop
   jpa:
     database-platform:  org.hibernate.dialect.PostgreSQLDialect
-paymentservice:
-  url: http://paymentservice.openshift.local

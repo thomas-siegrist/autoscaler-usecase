@@ -6,4 +6,4 @@ spring:
   profiles:
     active: ${STAGE:local}
 backendservice:
-  url: http://localhost:8080
+  url: {PAYMENTSERVICE:http://localhost:8081}
