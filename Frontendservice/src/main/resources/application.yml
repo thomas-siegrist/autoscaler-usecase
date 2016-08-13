@@ -4,4 +4,4 @@ spring:
   application:
     name: Frontendservice
 backendservice:
-  url: {BACKENDSERVICE:http://localhost:8080}
+  url: {backendservice:http://localhost:8080}
