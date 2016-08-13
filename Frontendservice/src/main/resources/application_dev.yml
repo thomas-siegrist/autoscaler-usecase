@@ -3,7 +3,5 @@ server:
 spring:
   application:
     name: Frontendservice
-  profiles:
-      active: ${STAGE:local}
 backendservice:
-  url: http://localhost:8080
+  url: http://backendservice.openshift.local
