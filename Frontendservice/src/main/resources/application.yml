@@ -3,7 +3,5 @@ server:
 spring:
   application:
     name: Frontendservice
-  profiles:
-    active: ${STAGE:local}
 backendservice:
-  url: {PAYMENTSERVICE:http://localhost:8081}
+  url: {BACKENDSERVICE:http://localhost:8080}
