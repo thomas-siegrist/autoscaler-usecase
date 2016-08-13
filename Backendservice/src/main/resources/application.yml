@@ -18,4 +18,4 @@ spring:
 flyway:
   baseline-on-migrate:  true
 paymentservice:
-  url: {PAYMENTSERVICE:http://localhost:8081}
+  url: ${PAYMENTSERVICE:http://localhost:8081}
