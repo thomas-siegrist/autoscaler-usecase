@@ -1,11 +1,17 @@
+#spring:
+#  datasource:
+#    driver-class-name:  org.postgresql.Driver
+#    url: jdbc:postgresql://postgres:5432/webshop
+#    username: postgres
+#    password: Post$Gres
+#    schema: webshop
+#  jpa:
+#    database-platform:  org.hibernate.dialect.PostgreSQLDialect
 spring:
-  datasource:
-    driver-class-name:  org.postgresql.Driver
-    url: jdbc:postgresql://postgres:5432/webshop
-    username: postgres
-    password: Post$Gres
-    schema: webshop
-  jpa:
-    database-platform:  org.hibernate.dialect.PostgreSQLDialect
+  rabbitmq:
+    host: rabbitmq
+    port: 5672
+    username: guest
+    password: guest
 paymentservice:
   url: http://paymentservice:8081
