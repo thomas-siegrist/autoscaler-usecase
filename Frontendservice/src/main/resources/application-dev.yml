@@ -1,2 +1,2 @@
 backendservice:
-  url: http://172.30.28.176
+  url: http://backendservice:8080
