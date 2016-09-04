@@ -1,2 +1,8 @@
 backendservice:
   url: http://backendservice:8080
+spring:
+  rabbitmq:
+    host: rabbitmq
+    port: 5672
+    username: guest
+    password: guest

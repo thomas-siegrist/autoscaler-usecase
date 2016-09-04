@@ -4,6 +4,10 @@ spring:
   application:
     name: Frontendservice
   profiles:
-      active: ${STAGE:local}
+    active: ${STAGE:local}
+  rabbitmq:
+        host: ${rabbitmq:localhost}
+        username: guest
+        password: guest
 backendservice:
   url: http://localhost:8080
