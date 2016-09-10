@@ -4,9 +4,11 @@
 
 ## Deployment on Openshift
 #### Prerequisites
-* Docker
-* Git
+* Docker installed
+* Git installed
+* OC cli installed
 * Docker-Hub account
+
 * Local Openshift installation
 * An Openshift Project called "usecase"
 
