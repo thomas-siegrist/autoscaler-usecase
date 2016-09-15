@@ -29,7 +29,7 @@ public class EmailListener {
     private void sendEmail(Email email) {
         try {
             for (int i = 0; i < email.getNumberOfAttachments() - 1; i++)
-                Thread.sleep(20);
+                Thread.sleep(50);
             emailServiceMock.sendEmail(email);
         } catch (InterruptedException e) {
             handleError(e);

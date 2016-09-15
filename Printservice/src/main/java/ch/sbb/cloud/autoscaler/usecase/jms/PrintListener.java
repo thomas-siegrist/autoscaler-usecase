@@ -69,7 +69,7 @@ public class PrintListener {
     private void print(PrintTask printTask) {
         try {
             for (int i = 0; i < printTask.getNumberOfOrders() - 1; i++)
-                Thread.sleep(20);
+                Thread.sleep(10);
         } catch (InterruptedException e) {
             handleError(e);
         }
